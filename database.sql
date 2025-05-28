@@ -1,0 +1,22 @@
+CREATE DATABASE IF NOT EXISTS todolist;
+
+USE todolist;
+
+CREATE TABLE users (
+	user_id INT(11) NOT NULL AUTO_INCREMENT,
+  username VARCHAR(20) NOT NULL,
+  email VARCHAR(30) NOT NULL,
+  pwd VARCHAR(255) NOT NULL,
+  created_datetime DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (user_id)
+);
+
+CREATE TABLE tasks (
+	task_id INT(11) NOT NULL AUTO_INCREMENT,
+  username VARCHAR(20) NOT NULL,
+  task VARCHAR(255) NOT NULL,
+  created_datetime DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  user_id int(11) NOT NULL,
+  PRIMARY KEY (task_id),
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
