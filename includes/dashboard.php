@@ -32,6 +32,19 @@
     transition-duration: 0.2s;
     transition-property: visibility, opacity;
   }
+  .table-container {
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 200px;
+  }
+  thead {
+    top: 0;
+    z-index: 2;
+    position: sticky;
+  }
+  table {
+    width: 290px;
+  }
 </style>
 </head>
 <body style="display: flex; justify-content: center; align-items: center;">
@@ -56,13 +69,17 @@
         <button type="button" id="new-task-popup-open">Add task</button>
       </div>
 
-      <div class="field-row-stacked">
+      <div class="field-row-stacked" style="float: right; margin-left: 7px;">
+        <button type="button" id="edit-task" disabled>Edit</button>
+        <button type="button" id="delete-task" disabled>Delete</button>
+      </div>
+
+      <div class="field-row-stacked table-container">
         <table class="has-shadow">
           <thead>
             <tr>
-              <th style="width: 25px;"></th>
-              <th>task</th>
-              <th>created date</th>
+              <th style="width: 15%;"></th>
+              <th style="width: 85%; text-align: center;">Task</th>
             </tr>
           </thead>
           <tbody id="task-body">

@@ -27,10 +27,17 @@ class Tasks extends DbConn {
   }
 
   public function addTask($pdo, $userId, $task){
-    $query = 'INSERT INTO tasks (task, user_id) VALUES (:task, :userId)';
+    $query = 'INSERT INTO tasks (task, user_id) VALUES (:task, :userId);';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':task', $task);
     $stmt->bindParam(':userId', $userId);
+    $stmt->execute();
+  }
+
+  public function deleteTask($pdo, $taskId){
+    $query = 'DELETE FROM tasks WHERE task_id = :taskId;';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':taskId', $taskId);
     $stmt->execute();
   }
 }

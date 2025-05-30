@@ -1,8 +1,7 @@
 1. encrypt passwords on signup
 2. add a session timer when user logged in
 3. don't give direct access to paths esp. when usr. is not logged in or that path must not be accessible
-4. add a short animation loading progress bar when user did some actions to a task 
-5. create 'deleting task' feature
+4. add a short animation loading progress bar when user did some actions to a task
 6. create 'editing task' feature
 7. create 'task sorting' feature
 8. create 'task search' feature

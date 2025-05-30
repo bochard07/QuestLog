@@ -16,14 +16,16 @@ function loadTasks(){ // fetching tasks on database
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td style="text-align: center;">
-            <input type="checkbox" id="checkbox_${task.task_id}">
-            <label for="checkbox_${task.task_id}"></label>
+            <input type="checkbox" id="${task.task_id}">
+            <label for="${task.task_id}"></label>
           </td>
           <td>${task.task}</td>
-          <td>${task.created_datetime}</td>
         `;
 
         tbody.appendChild(tr);
+
+        // listen for checkboxes after loading tasks in DOM
+        addCheckboxListeners();
       });
     } else{
       const tr = document.createElement('tr');
@@ -35,6 +37,34 @@ function loadTasks(){ // fetching tasks on database
     console.error(`Error fetching tasks: ${error}`);
   });
 }
+
+function addCheckboxListeners(){
+  const checkboxes = document.querySelectorAll('#task-body input[type="checkbox"]');
+
+  checkboxes.forEach(function(checkbox){
+    checkbox.addEventListener('change', function(){
+      const isAnyChecked = Array.from(checkboxes).some(function(checkbox){
+        return checkbox.checked;
+      });
+
+      if(isAnyChecked){
+        removeDisabledAttributes();
+      } else{
+        setDisabledAttributes();
+      }
+    });
+  });
+}
+
+function removeDisabledAttributes(){
+  document.getElementById('edit-task').removeAttribute('disabled');
+  document.getElementById('delete-task').removeAttribute('disabled');
+};
+
+function setDisabledAttributes(){
+  document.getElementById('edit-task').setAttribute('disabled', true);
+  document.getElementById('delete-task').setAttribute('disabled', true);
+};
 
 function addTask(){ // adding task on database
   const taskInput = document.getElementById('task-name');
@@ -59,16 +89,48 @@ function addTask(){ // adding task on database
     console.log('Response from server:', data);
     console.log('Status:', data.status);
     console.log('Message:', data.message);
-  })
-  .catch(function(err){
-    console.error(err);
-  });
-    
-  setTimeout(function(){
+    setTimeout(function(){
     loadTasks();
-  }, 500);
-  
-  popupNewTaskClose();
+    }, 500);
+    setDisabledAttributes();
+    popupNewTaskClose();
+  })
+  .catch(function(error){
+    console.error(error);
+  });
+}
+
+function deleteTask(){
+  const checkboxes = document.querySelectorAll('#task-body input[type="checkbox"]');
+  let isCheckedArray = [];
+
+  for(let checkbox of checkboxes){
+    if(checkbox.checked){
+      isCheckedArray.push(checkbox.id);
+    }
+  }
+
+  // after iterating and finding the id of a checkbox that is checked...
+  fetch('./includes/delete_task.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(isCheckedArray)
+  })
+  .then(function(response){
+    return response.json();
+  })
+  .then(function(data){
+    console.log('Response from server:', data);
+    console.log('Status:', data.status);
+    console.log('Message:', data.message);
+    setTimeout(function(){
+    loadTasks();
+    }, 500);
+    setDisabledAttributes();
+  })
+  .catch(function(error){
+    console.error(error);
+  });
 }
 
 function resetTaskInputPlaceholder(){
@@ -110,6 +172,10 @@ document.getElementById('add-task-form').addEventListener('submit', function(e){
   addTask();
 });
 
+document.getElementById('delete-task').addEventListener('click', function(e){
+  e.preventDefault();
+  deleteTask();
+});
 
 // calls
 loadTasks();
