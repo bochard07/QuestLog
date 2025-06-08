@@ -5,3 +5,4 @@
 6. create 'editing task' feature
 7. create 'task sorting' feature
 8. create 'task search' feature
+9. when popup is open, the main window will be unaccessible
