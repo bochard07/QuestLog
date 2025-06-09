@@ -43,30 +43,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Sign up</title>
-  <link rel="stylesheet" href="https://unpkg.com/7.css">
+  <link href="./dist/rpgui.css" rel="stylesheet" type="text/css" >
+  <script src="./dist/rpgui.js"></script>
 </head>
-<body style="display: flex; justify-content: center; align-items: center;">
-  <div class="window active" style="margin: 32px; width: fit-content;">
-    <div class="title-bar">
-      <div class="title-bar-title">ToDo App - Sign up</div>
-    </div>
+<body class="rpgui-content" style="display: flex; justify-content: center;">
+  <div class="rpgui-container framed" style="margin: 32px; width: 100%; max-width: 600px;">
 
-    <main class="window-body has-space">
-      <p class="instruction instruction-primary">You are now in the sign up page.</p>
-      <p class="instruction">Some recommendation on creating an account:</p>
-      <ul class="instruction">
+    <main>
+      <h1 style="text-align: center;">Sign up</h1>
+      <p>Some recommendations on creating an account:</p>
+      <ul>
         <li>Choose a password that is atleast 12 characters long.</li>
         <li>Use a strong password. Combination of uppercase, lowercase, numbers, and special characters.</li>
       </ul>
-      <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST">
-        <fieldset class="field-row">
-          <legend>Create an account</legend>
+      <div class="rpgui-container framed-grey" style="width: 80%; margin: auto;">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST">
           <input type="text" name="username" placeholder="username">
           <input type="text" name="email" placeholder="email">
           <input type="password" name="pwd" placeholder="password">
-          <button type="submit">Register</button>
-        </fieldset>   
-      </form>
+          <div style="text-align: right;">
+            <button class="rpgui-button" type="submit">Register</button>
+          </div>
+        </form>
+      </div>
+
 
       <?php if(!empty($errors)): ?>
         <div>

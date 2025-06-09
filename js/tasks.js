@@ -8,29 +8,26 @@ function loadTasks(){ // fetching tasks on database
     return response.json();
   })
   .then(function(data){
-    const tbody = document.getElementById('task-body');
-    tbody.innerHTML = '';
+    const taskBody = document.getElementById('task-body');
+    taskBody.innerHTML = '';
 
     if(Array.isArray(data) && data.length > 0){
       data.forEach(function(task){
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td style="text-align: center;">
-            <input type="checkbox" id="${task.task_id}">
-            <label for="${task.task_id}"></label>
-          </td>
-          <td>${task.task}</td>
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <input class="rpgui-checkbox" type="checkbox" id="${task.task_id}">
+          <label for="${task.task_id}">${task.task}</label>
         `;
 
-        tbody.appendChild(tr);
+        taskBody.appendChild(div);
 
         // listen for checkboxes after loading tasks in DOM
         addCheckboxListeners();
       });
     } else{
-      const tr = document.createElement('tr');
-      tr.innerHTML = '<td colspan="3" style="color: red; text-align: center;">No tasks found.</td>';
-      tbody.appendChild(tr);
+      const div = document.createElement('div');
+      div.innerHTML = '<p style="text-align: center; color: red;">No tasks found.</p>';
+      taskBody.appendChild(div);
     }
   })
   .catch(function(error){

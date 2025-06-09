@@ -49,25 +49,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Log in</title>
-  <link rel="stylesheet" href="https://unpkg.com/7.css">
+  <link href="./dist/rpgui.css" rel="stylesheet" type="text/css" >
+  <script src="./dist/rpgui.js"></script>
 </head>
-<body style="display: flex; justify-content: center; align-items: center;">
-  <div class="window active" style="margin: 32px; width: fit-content;">
-    <div class="title-bar">
-      <div class="title-bar-title">ToDo App - Log in</div>
-    </div>
+<body class="rpgui-content" style="display: flex; justify-content: center;">
+  <div class="rpgui-container framed" style="margin: 32px; width: 100%; max-width: 600px;">
 
-    <main class="window-body has-space">
-      <p class="instruction instruction-primary">You are now in the log in page.</p>
-      <p class="instruction">Fill in the information below to access your account.</p>
-      <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST">
-        <fieldset class="field-row">
-          <legend>Log in to your account</legend>
+    <main>
+      <h1 style="text-align: center;">Log in</h1>
+      <p>Fill in the information below to access your account.</p>
+      <div class="rpgui-container framed-grey" style="width: 80%; margin: auto;">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST">
           <input type="text" name="username" placeholder="username">
           <input type="password" name="pwd" placeholder="password">
-          <button type="submit">Log In</button>
-        </fieldset>   
-      </form>
+          <div style="text-align: right;">
+            <button class="rpgui-button" type="submit">Log In</button>
+          </div>
+        </form>
+      </div>
 
       <?php if(!empty($errors)): ?>
         <div>
