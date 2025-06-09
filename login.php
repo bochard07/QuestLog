@@ -53,12 +53,12 @@
   <script src="./dist/rpgui.js"></script>
 </head>
 <body class="rpgui-content" style="display: flex; justify-content: center;">
-  <div class="rpgui-container framed" style="margin: 32px; width: 100%; max-width: 600px;">
+  <div class="rpgui-container framed" style="margin: 32px; width: 100%; height: fit-content; max-width: 600px;">
 
     <main>
       <h1 style="text-align: center;">Log in</h1>
       <p>Fill in the information below to access your account.</p>
-      <div class="rpgui-container framed-grey" style="width: 80%; margin: auto;">
+      <div class="rpgui-container framed-grey" style="width: 90%; margin: auto;">
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST">
           <input type="text" name="username" placeholder="username">
           <input type="password" name="pwd" placeholder="password">

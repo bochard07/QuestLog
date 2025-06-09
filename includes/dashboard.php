@@ -36,7 +36,7 @@
 </style>
 </head>
 <body class="rpgui-content" style="display: flex; justify-content: center;">
-  <div class="rpgui-container framed" style="margin: 32px; width: 100%; max-width: 600px;">
+  <div class="rpgui-container framed" style="margin: 32px; width: 100%; height: fit-content; max-width: 600px;">
     <div style="text-align: right;">
       <form action="../includes/logout.php" method="POST" class="title-bar-controls">
         <button class="rpgui-button" type="submit">Exit</button>
@@ -44,7 +44,7 @@
     </div>
     
     <main>
-      <h1 style="text-align: center;">My ToDo List</h1>
+      <h1 style="text-align: center;">My Quests Log</h1>
       <p style="text-align: center;">"I must finish all of these!"</p>
       <hr class="golden">
       <div>
@@ -65,15 +65,17 @@
           <div>
             <button class="rpgui-button" type="button" id="edit-task" disabled>Edit</button>
             <button class="rpgui-button" type="button" id="delete-task" disabled>Delete</button>
-          </div>
+          </div>  
         </div>
       </div>
 
-      <div class="rpgui-container framed-grey" style="width: 80%; margin: auto;">
+      <div class="rpgui-container framed-grey" style="width: 90%; margin: auto;">
         <h2 style="text-align: center;">Tasks</h2>
         <hr>
-        <div id="task-body" style="width: 80%; margin: auto; word-break: break-all;">
-          <!-- ajax will insert the fetched task data here... -->
+        <div style="overflow-y: auto; height: 400px;">
+          <div id="task-body" style="width: 80%; margin: auto; word-break: break-all;">
+            <!-- ajax will insert the fetched task data here... -->
+          </div>
         </div>
       </div>
       

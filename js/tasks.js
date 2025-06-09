@@ -1,8 +1,7 @@
 const addTaskForm = document.getElementById('add-task-form');
 
-
-// functions
-function loadTasks(){ // fetching tasks on database
+//===== LOAD TASKS =====//
+function loadTasks(){
   fetch('./includes/fetch_tasks.php')
   .then(function(response){
     return response.json();
@@ -63,7 +62,8 @@ function setDisabledAttributes(){
   document.getElementById('delete-task').setAttribute('disabled', true);
 };
 
-function addTask(){ // adding task on database
+//===== ADD TASK =====//
+function addTask(){
   const taskInput = document.getElementById('task-name');
   const formData = new FormData(addTaskForm);
   const taskName = formData.get('task-name').trim();
@@ -97,6 +97,12 @@ function addTask(){ // adding task on database
   });
 }
 
+//===== EDIT TASK =====//
+function editTask(){
+  
+}
+
+//===== DELETE TASK =====//
 function deleteTask(){
   const checkboxes = document.querySelectorAll('#task-body input[type="checkbox"]');
   let isCheckedArray = [];
