@@ -21,9 +21,10 @@
   <link href="./dist/rpgui.css" rel="stylesheet" type="text/css" >
   <script src="./dist/rpgui.js"></script>
 <style>
-  #new-task-popup-window {
+  #new-task-popup-window,
+  #edit-task-popup-window {
     width: 350px;
-    position: absolute;
+    position: fixed;
     z-index: 999;
     top: 50%;
     left: 50%;
@@ -36,10 +37,10 @@
 </style>
 </head>
 <body class="rpgui-content" style="display: flex; justify-content: center;">
-  <div class="rpgui-container framed" style="margin: 32px; width: 100%; height: fit-content; max-width: 600px;">
+  <div class="rpgui-container framed" style="margin: 36px 0; width: 90%; height: fit-content; max-width: 600px;">
     <div style="text-align: right;">
       <form action="../includes/logout.php" method="POST" class="title-bar-controls">
-        <button class="rpgui-button" type="submit">Exit</button>
+        <button class="rpgui-button" type="submit">Log Out</button>
       </form>
     </div>
     
@@ -63,7 +64,7 @@
             <button class="rpgui-button" type="button" id="new-task-popup-open">Add task</button>
           </div>
           <div>
-            <button class="rpgui-button" type="button" id="edit-task" disabled>Edit</button>
+            <button class="rpgui-button" type="button" id="edit-task-popup-open" disabled>Edit</button>
             <button class="rpgui-button" type="button" id="delete-task" disabled>Delete</button>
           </div>  
         </div>
@@ -73,21 +74,34 @@
         <h2 style="text-align: center;">Tasks</h2>
         <hr>
         <div style="overflow-y: auto; height: 400px;">
-          <div id="task-body" style="width: 80%; margin: auto; word-break: break-all;">
+          <div id="task-body" style="width: 90%; margin: auto; word-break: break-all;">
             <!-- ajax will insert the fetched task data here... -->
           </div>
         </div>
       </div>
       
-      <!-- popup -->
-      <div class="rpgui-container framed golden rpgui-draggable" id="new-task-popup-window">
+      <!-- popup for add task -->
+      <div class="rpgui-container framed golden" id="new-task-popup-window">
         <h3>New Task</h3>
         <p>Add the task you need to do.</p>
         <form id="add-task-form">
-          <input type="text" id='task-name' name="task-name" placeholder="New task...">
+          <input type="text" id="task-name" name="task-name" placeholder="New task...">
           <div style="display: flex; justify-content: center; align-items: center;">
             <button class="rpgui-button" type="button" id="new-task-popup-close">Close</button>
             <button class="rpgui-button" type="submit">Add</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- popup for edit task -->
+      <div class="rpgui-container framed golden" id="edit-task-popup-window">
+        <h3>Edit Task</h3>
+        <p>Apply a new value.</p>
+        <form id="edit-task-form">
+          <input type="text" id="edit-input-task-name" name="edit-input-task-name" placeholder="Add new value...">
+          <div style="display: flex; justify-content: center; align-items: center;">
+            <button class="rpgui-button" type="button" id="edit-task-popup-close">Close</button>
+            <button class="rpgui-button" type="submit">Edit</button>
           </div>
         </form>
       </div>

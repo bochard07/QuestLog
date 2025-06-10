@@ -1,4 +1,6 @@
 const addTaskForm = document.getElementById('add-task-form');
+const editTaskForm = document.getElementById('edit-task-form');
+let isCheckedArray = [];
 
 //===== LOAD TASKS =====//
 function loadTasks(){
@@ -38,28 +40,47 @@ function addCheckboxListeners(){
   const checkboxes = document.querySelectorAll('#task-body input[type="checkbox"]');
 
   checkboxes.forEach(function(checkbox){
-    checkbox.addEventListener('change', function(){
-      const isAnyChecked = Array.from(checkboxes).some(function(checkbox){
-        return checkbox.checked;
-      });
-
-      if(isAnyChecked){
-        removeDisabledAttributes();
-      } else{
-        setDisabledAttributes();
-      }
-    });
+    checkbox.addEventListener('change', evaluateCheckedCheckboxes);
   });
-}
+  
+  function evaluateCheckedCheckboxes(){
+    const checked = Array.from(checkboxes).filter(function(cb){
+      return cb.checked;
+    });
 
-function removeDisabledAttributes(){
-  document.getElementById('edit-task').removeAttribute('disabled');
+    isCheckedArray = checked.map(function(cb){
+      return cb.id;
+    });
+
+    if (checked.length === 1) {
+      console.log('only one ticked');
+      removeDisabledAttributesOnDeleteBtn();
+      removeDisabledAttributesOnEditBtn();
+    } else if (checked.length > 1) {
+      console.log('multiple ticked');
+      removeDisabledAttributesOnDeleteBtn();
+      setDisabledAttributesOnEditBtn();
+    } else {
+      setDisabledAttributesOnDeleteBtn();
+      setDisabledAttributesOnEditBtn();
+    }
+  }
+};
+
+function removeDisabledAttributesOnDeleteBtn(){
   document.getElementById('delete-task').removeAttribute('disabled');
 };
 
-function setDisabledAttributes(){
-  document.getElementById('edit-task').setAttribute('disabled', true);
+function setDisabledAttributesOnDeleteBtn(){
   document.getElementById('delete-task').setAttribute('disabled', true);
+};
+
+function removeDisabledAttributesOnEditBtn(){
+  document.getElementById('edit-task-popup-open').removeAttribute('disabled');
+};
+
+function setDisabledAttributesOnEditBtn(){
+  document.getElementById('edit-task-popup-open').setAttribute('disabled', true);
 };
 
 //===== ADD TASK =====//
@@ -89,7 +110,8 @@ function addTask(){
     setTimeout(function(){
     loadTasks();
     }, 500);
-    setDisabledAttributes();
+    setDisabledAttributesOnDeleteBtn();
+    setDisabledAttributesOnEditBtn();
     popupNewTaskClose();
   })
   .catch(function(error){
@@ -99,21 +121,41 @@ function addTask(){
 
 //===== EDIT TASK =====//
 function editTask(){
-  
+  const taskInput = document.getElementById('edit-input-task-name');
+  const formData = new FormData(editTaskForm);
+  const taskName = formData.get('edit-input-task-name').trim();
+
+  // replace placeholder text when no input
+  if(!taskName){
+    taskInput.placeholder = 'Please fill this input...';
+    return;
+  }
+
+  fetch('./includes/edit_task.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(isCheckedArray)
+  })
+  .then(function(response){
+    console.log(response);
+    return response.json();
+  })
+  .then(function(data){
+    console.log(data);
+    setTimeout(function(){
+    loadTasks();
+    }, 500);
+    // setDisabledAttributesOnEditBtn();
+  })
+  .catch(function(error){
+    console.error(error);
+  });
 }
 
 //===== DELETE TASK =====//
 function deleteTask(){
-  const checkboxes = document.querySelectorAll('#task-body input[type="checkbox"]');
-  let isCheckedArray = [];
+  console.log(isCheckedArray);
 
-  for(let checkbox of checkboxes){
-    if(checkbox.checked){
-      isCheckedArray.push(checkbox.id);
-    }
-  }
-
-  // after iterating and finding the id of a checkbox that is checked...
   fetch('./includes/delete_task.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -129,15 +171,21 @@ function deleteTask(){
     setTimeout(function(){
     loadTasks();
     }, 500);
-    setDisabledAttributes();
+    setDisabledAttributesOnDeleteBtn();
   })
   .catch(function(error){
     console.error(error);
   });
 }
 
-function resetTaskInputPlaceholder(){
+function resetTaskInputPlaceholderForAddBtn(){
   const taskInput = document.getElementById('task-name');
+  setTimeout(function(){
+    taskInput.placeholder = 'New task...';
+  }, 200);
+}
+function resetTaskInputPlaceholderForEditBtn(){
+  const taskInput = document.getElementById('edit-input-task-name');
   setTimeout(function(){
     taskInput.placeholder = 'New task...';
   }, 200);
@@ -157,6 +205,20 @@ function popupNewTaskClose(){
   popupWindow.style.visibility = 'hidden';
 }
 
+function popupEditTaskOpen(){
+  popupWindow = document.getElementById('edit-task-popup-window');
+  popupWindow.style.visibility = 'visible';
+  popupWindow.style.opacity = 1;
+}
+
+function popupEditTaskClose(){
+  popupWindow = document.getElementById('edit-task-popup-window');
+  setTimeout(function(){
+    editTaskForm.reset();
+  }, 200);
+  popupWindow.style.visibility = 'hidden';
+}
+
 
 // event listeners
 document.getElementById('new-task-popup-open').addEventListener('click', function(){
@@ -164,15 +226,31 @@ document.getElementById('new-task-popup-open').addEventListener('click', functio
 });
 
 document.getElementById('new-task-popup-close').addEventListener('click', function(){
-  resetTaskInputPlaceholder();
+  resetTaskInputPlaceholderForAddBtn();
   popupNewTaskClose();
 });
 
-document.getElementById('task-name').addEventListener('input', resetTaskInputPlaceholder);
+document.getElementById('edit-task-popup-open').addEventListener('click', function(){
+  popupEditTaskOpen();
+});
+
+document.getElementById('edit-task-popup-close').addEventListener('click', function(){
+  resetTaskInputPlaceholderForEditBtn();
+  popupEditTaskClose();
+});
+
+document.getElementById('task-name').addEventListener('input', resetTaskInputPlaceholderForAddBtn);
+
+document.getElementById('edit-input-task-name').addEventListener('input', resetTaskInputPlaceholderForEditBtn);
 
 document.getElementById('add-task-form').addEventListener('submit', function(e){
   e.preventDefault();
   addTask();
+});
+
+document.getElementById('edit-task-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  editTask();
 });
 
 document.getElementById('delete-task').addEventListener('click', function(e){
