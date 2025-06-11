@@ -121,20 +121,23 @@ function addTask(){
 
 //===== EDIT TASK =====//
 function editTask(){
-  const taskInput = document.getElementById('edit-input-task-name');
-  const formData = new FormData(editTaskForm);
-  const taskName = formData.get('edit-input-task-name').trim();
+  const taskName = document.getElementById('edit-input-task-name').value.trim();
 
   // replace placeholder text when no input
   if(!taskName){
-    taskInput.placeholder = 'Please fill this input...';
+    document.getElementById('edit-input-task-name').placeholder = 'Please fill this input...';
     return;
   }
+
+  const payload = {
+    taskId: isCheckedArray[0],
+    newInput: taskName
+  };
 
   fetch('./includes/edit_task.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(isCheckedArray)
+    body: JSON.stringify(payload)
   })
   .then(function(response){
     console.log(response);
@@ -145,7 +148,8 @@ function editTask(){
     setTimeout(function(){
     loadTasks();
     }, 500);
-    // setDisabledAttributesOnEditBtn();
+    setDisabledAttributesOnEditBtn();
+    popupEditTaskClose();
   })
   .catch(function(error){
     console.error(error);
@@ -187,7 +191,7 @@ function resetTaskInputPlaceholderForAddBtn(){
 function resetTaskInputPlaceholderForEditBtn(){
   const taskInput = document.getElementById('edit-input-task-name');
   setTimeout(function(){
-    taskInput.placeholder = 'New task...';
+    taskInput.placeholder = 'Edit task...';
   }, 200);
 }
 

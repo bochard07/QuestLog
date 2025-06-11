@@ -35,9 +35,10 @@ class Tasks extends DbConn {
   }
 
   public function editTask($pdo, $taskId, $newInput){
-    $query = 'UPDATE tasks SET task =  WHERE task_id = ;taskId;';
+    $query = 'UPDATE tasks SET task = :newInput WHERE task_id = :taskId;';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':taskId', $taskId);
+    $stmt->bindParam(':newInput', $newInput);
     $stmt->execute();
   }
 
