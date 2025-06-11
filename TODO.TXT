@@ -2,6 +2,5 @@
 -add a session timer when user logged in
 -don't give direct access to paths esp. when usr. is not logged in or that path must not be accessible
 -add a short animation loading progress bar when user did some actions to a task
--create 'task sorting' feature
--create 'task search' feature
+-create 'task sorting' feature (not now, maybe when im not lazy to change a lot of code)
 -when popup is open, the main window will be unaccessible

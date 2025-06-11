@@ -15,9 +15,10 @@ function loadTasks(){
     if(Array.isArray(data) && data.length > 0){
       data.forEach(function(task){
         const div = document.createElement('div');
+        div.classList.add('task-item');
         div.innerHTML = `
           <input class="rpgui-checkbox" type="checkbox" id="${task.task_id}">
-          <label for="${task.task_id}">${task.task}</label>
+          <label for="${task.task_id}" class="task-label">${task.task}</label>
         `;
 
         taskBody.appendChild(div);
@@ -109,6 +110,7 @@ function addTask(){
     console.log('Message:', data.message);
     setTimeout(function(){
     loadTasks();
+    removeSearchInput();
     }, 500);
     setDisabledAttributesOnDeleteBtn();
     setDisabledAttributesOnEditBtn();
@@ -147,6 +149,7 @@ function editTask(){
     console.log(data);
     setTimeout(function(){
     loadTasks();
+    removeSearchInput();
     }, 500);
     setDisabledAttributesOnEditBtn();
     popupEditTaskClose();
@@ -174,6 +177,7 @@ function deleteTask(){
     console.log('Message:', data.message);
     setTimeout(function(){
     loadTasks();
+    removeSearchInput();
     }, 500);
     setDisabledAttributesOnDeleteBtn();
   })
@@ -221,6 +225,10 @@ function popupEditTaskClose(){
     editTaskForm.reset();
   }, 200);
   popupWindow.style.visibility = 'hidden';
+}
+
+function removeSearchInput(){
+  document.getElementById('search').value = '';
 }
 
 

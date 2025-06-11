@@ -51,11 +51,11 @@
       <div>
         <div>
           <input type="search" id="search" placeholder="Search task...">
-          <select class="rpgui-dropdown" name="sort" id="sort">
+          <!-- <select class="rpgui-dropdown" name="sort" id="sort">
             <option value="all" selected>All</option>
             <option value="incomplete">Incomplete</option>
             <option value="complete">Complete</option>
-          </select>
+          </select> -->
         </div>
         
         <!-- action buttons for tasks -->
@@ -107,7 +107,8 @@
       </div>
     </main>
   </div>
-
+  
+  <script src="./js/search.js"></script>
   <script src="./js/tasks.js"></script>
 </body>
 </html>
