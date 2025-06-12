@@ -37,7 +37,7 @@
 </style>
 </head>
 <body class="rpgui-content" style="display: flex; justify-content: center;">
-  <div class="rpgui-container framed" style="margin: 36px 0; width: 90%; height: fit-content; max-width: 600px;">
+  <div class="rpgui-container framed" style="margin: 36px 0; width: 95%; height: fit-content; max-width: 600px;">
     <div style="text-align: right;">
       <form action="../includes/logout.php" method="POST" class="title-bar-controls">
         <button class="rpgui-button" type="submit">Log Out</button>
@@ -74,7 +74,7 @@
         <h2 style="text-align: center;">Tasks</h2>
         <hr>
         <div style="overflow-y: auto; height: 400px;">
-          <div id="task-body" style="width: 90%; margin: auto; word-break: break-all;">
+          <div id="task-body" style="width: 100%; margin: auto; word-break: break-all;">
             <!-- ajax will insert the fetched task data here... -->
           </div>
         </div>

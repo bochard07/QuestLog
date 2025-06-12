@@ -53,7 +53,7 @@
   <script src="./dist/rpgui.js"></script>
 </head>
 <body class="rpgui-content" style="display: flex; justify-content: center;">
-  <div class="rpgui-container framed" style="margin: 32px 0; width: 90%; height: fit-content; max-width: 600px;">
+  <div class="rpgui-container framed" style="margin: 32px 0; width: 95%; height: fit-content; max-width: 600px;">
 
     <main>
       <h1 style="text-align: center;">Log in</h1>
