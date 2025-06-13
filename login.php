@@ -48,7 +48,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="A simple, no-fuss to-do list web app designed to help you stay organized and remember what matters.">
+  <link rel="icon" type="image/png" href="./images/temp-logo.png">
   <title>Log in</title>
+
+  <!-- opengraph -->
+    <meta property="og:title" content="Quest Log: rpg-themed todo list web application">
+    <meta property="og:description" content="A simple, no-fuss to-do list web app designed to help you stay organized and remember what matters.">
+    <meta property="og:url" content="https://questlog.tenkyuu.dev">
+    <meta property="og:image" content="https://questlog.tenkyuu.dev/images/app-screenshot.png">
+  
   <link href="./dist/rpgui.css" rel="stylesheet" type="text/css" >
   <script src="./dist/rpgui.js"></script>
 </head>
