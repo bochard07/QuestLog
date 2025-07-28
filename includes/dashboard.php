@@ -48,7 +48,7 @@
 <body class="rpgui-content" style="display: flex; justify-content: center;">
   <div class="rpgui-container framed" style="margin: 36px 0; width: 95%; height: fit-content; max-width: 600px;">
     <div style="text-align: right;">
-      <form action="../includes/logout.php" method="POST" class="title-bar-controls">
+      <form action="./includes/logout.php" method="POST" class="title-bar-controls">
         <button class="rpgui-button" type="submit">Log Out</button>
       </form>
     </div>
